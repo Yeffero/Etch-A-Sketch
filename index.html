@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Etch-A-Sketch</title>
+</head>
+<body id=container >
+
+
+
+  <script>
+ 	// Your JavaScript goes here!
+
+  function getRandomInt(min,max){
+  		min = Math.ceil(min);
+  		max = Math.floor(max)
+  		return Math.floor(Math.random()* (max - min) + min);
+
+  	};
+
+  	function createRandomColor(){
+  		var r = getRandomInt(0,256);
+  		var g = getRandomInt(0,256);
+  		var b = getRandomInt(0,256);
+  		return "rgb(" + r + "," + g + "," + b + ")";
+  	}
+
+function randomColor() {
+  colors=1;
+}
+
+  function changeColor(e) {
+    //e1=e;
+    //console.log(e1);
+    //const color = document.querySelector(`div[data-key="${e.innerText}"]`);
+    if (colors==0)
+    {e.target.style.background ='black';
+    }
+    else {
+      let colorin=createRandomColor();
+      let beforeColorin=e.target.style.background;
+      if (beforeColorin=='white') {
+        e.target.style.background=colorin;
+      } else if (beforeColorin != 'black') {
+        let locate =beforeColorin.slice(beforeColorin.indexOf('(')+1,beforeColorin.length-1);
+        let res=locate.split(",");
+        let r =Number(res[0]);
+        let g = Number(res[1]);
+        let b=Number(res[2]);
+        r=r-(r*0.3;
+        g=g-(g*0.3);
+        b=b-(b*0.3);
+        let red="";
+        let green="";
+        let blue="";
+        red=r.toFixed(0);
+        blue=b.toFixed(0);
+        green=g.toFixed(0);
+
+
+        e.target.style.background="rgb(" + red + "," + green + "," + blue + ")";}
+      //e.target.style.background="rgb(4,45,66)";
+    }
+
+    //console.log(e);
+  //  const color = document.querySelector(`cell[data-key="${e.textContent}"]`);
+
+    //if (!color) return;olor.setAttribute('style', 'backgroundColor:blue');
+  }
+
+  function regenerate()
+  {
+    let siz =16 ;
+    do {
+      siz=prompt('Please insert a number between 16 and 100');
+    } while (siz<16 || siz>100);
+
+      deleteGrid();
+      createGrid(siz);
+  }
+
+  function createGrid(size)
+  {
+    colors=0;
+    const contentBox= document.createElement('div');
+
+    contentBox.setAttribute('style', 'display:block ; border: 0px solid black; margin:0 auto; width: '+ windowWidth/2 +'px;'  );
+    contentBox.classList.add('contentBox');
+    container.appendChild(contentBox);
+    for (var i = 1; i <= size; i++) {
+        const contentDivRow= document.createElement('div');
+        contentDivRow.classList.add('contentDivRow');
+        contentDivRow.setAttribute('style', 'display: flex  ');
+      for (var j = 0; j < size;j++) {
+          const contentDivCell= document.createElement('div');
+
+          contentDivCell.setAttribute('style', 'border: 1px solid black; background: white ;  width : '+(windowWidth/2)/size +'px ; height: ' + (windowWidth/2)/size + 'px ' );
+          contentDivCell.setAttribute('class', 'cell' );
+          contentDivCell.setAttribute('data-key', j+((i-1)*size) );
+          contentDivCell.classList.add('contentDivCell');
+          //contentDivCell.textContent = " . " ; //j+((i-1)*size);
+          //contentDivCell.innerHTML = " . " ;
+          contentDivRow.appendChild(contentDivCell);
+      }
+
+       contentBox.appendChild(contentDivRow);
+
+      }
+
+      const cells = Array.from(document.querySelectorAll('.cell'));
+      cells.forEach(cell => cell.addEventListener('mouseover',changeColor));
+  }
+
+
+    function deleteGrid()
+    {
+        var elements = document.getElementsByClassName("cell");
+        for(var i = elements.length - 1; i >= 0; i--) {
+        if(elements[i] && elements[i].parentElement) {
+            elements[i].parentElement.removeChild(elements[i]);
+        }
+      }
+        var element = document.getElementsByClassName("contentDivRow")
+
+        for(var i = element.length - 1; i >= 0; i--) {
+        if(element[i] && element[i].parentElement) {
+            element[i].parentElement.removeChild(element[i]);
+        }
+    }
+
+    var elemen = document.getElementsByClassName("contentBox")
+
+      for(var i = elemen.length - 1; i >= 0; i--) {
+        if(elemen[i] && elemen[i].parentElement) {
+        elemen[i].parentElement.removeChild(elemen[i]);
+      }
+    }
+  }
+
+//main GLOBAL
+      let playerCount=0;
+      let computerCount=0;
+      let countTie=0;
+      let currentResult=0;
+      let windowWidth=screen.width;
+      let colors=0;
+
+      let gano="Lo se";
+
+  const container = document.querySelector('#container');
+  //console.log(screen.width);
+  container.setAttribute('style', 'display:block ; background: #ffc107; border: 0px solid black; margin:0 auto; width:' + windowWidth/2 +'px; text-align:center; border: 200px'  );
+//Button of Reset
+  const buttonReset= document.createElement('button');
+  buttonReset.classList.add ('buttonR');
+  buttonReset.innerHTML='Reset';
+  buttonReset.setAttribute('style', ' margin:0 auto ; width: 30%; hiegth:160px;');
+
+  const buttonRainbow= document.createElement('button');
+  buttonRainbow.classList.add ('buttonRainbow');
+//  buttonReset.setAttribute('value', 'Reset');
+  buttonRainbow.innerHTML='RainBow';
+  buttonRainbow.setAttribute('style', ' margin:0 auto ; width: 30%; hiegth:160px;');
+  buttonReset.style.fontSize=' 100%';
+  buttonRainbow.style.fontSize='100%';
+
+  const returnLine= document.createElement('div');
+  returnLine.innerHTML="Erch - A - Sketch </br> </br> </br> ";
+  returnLine.style.fontSize=' 200%';
+  returnLine.style.Color='#46ad88';
+
+  const returnLine2= document.createElement('div');
+  returnLine2.innerHTML=" </br> </br> </br>  ";
+  container.appendChild(returnLine);
+  container.appendChild(buttonReset);
+  container.appendChild(buttonRainbow);
+  container.appendChild(returnLine2);
+
+
+  buttonReset.addEventListener('click',regenerate);
+  buttonRainbow.addEventListener('click',randomColor);
+
+  createGrid(16);
+
+
+
+
+</script>
+
+
+</body>
+</html>
